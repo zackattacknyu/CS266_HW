@@ -39,9 +39,47 @@
 
 \vfill\eject
 
-\section*{Problem 4}
+\section*{Problem 1.6}
 
-\subsection*{Problem 4a}
+\subsection*{Problem 1.6 Part A}
+
+Since the convex hull is a convex set containing all the points, it holds that the convex hull of the 2n endpoints is a convex set that contains all the line segments. Due to the convexity, all the line segments will be in the convex hull. 
+\\
+\\
+Since the endpoints are on the line, a convex set of the n line segments must contain all the 2n endpoints. Since the convex hull of 2n endpoints is the smallest convex set that contains all the endpoints, it is thus the smallest convex set that contains all the n line segments, thus it is the convex hull of the line segments. 
+
+\subsection*{Problem 1.6 Part B}
+
+Let P be a non-convex polygon. Algorithm for finding the convex hull of P in O(n) time:
+\\
+1. Find left-most point and right-most point in polygon. 
+2. To compute the upper hull, build up the line segments using the same algorithm as ConvexHull and use the vertices in lexicographic order of the polygon
+3. Add or delete vertices depending on whether the slope is decreasing. 
+TODO: Improve this description
+
+\section*{Problem 1.10}
+
+Let S be a set of n possibly intersecting unit circles
+
+\subsection*{Problem 1.10a}
+
+Proof that the convex hull of S consists of straight lines and pieces of circles in S. 
+\\
+A circle can be considered an infinite sided polygon. With this in mind, the convex hull will be the convex set of all the polygon vertices. Thus, it will be pieces of the circles as well as straight lines connecting the circles. Additionally, a circle is convex itself. 
+\\
+TODO: Improve the proof
+
+\subsection*{Problem 1.10b}
+
+If a circle appears twice on the boundary, then there is not a convex set on the boundary. 
+\\
+TODO: Improve this proof
+
+\subsection*{Problem 1.10c}
+
+The circles all have equal radii, thus the convex hull of S will have the centers of the circles
+
+
 
 
 %\begin{figure}[H]
