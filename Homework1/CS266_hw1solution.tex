@@ -71,10 +71,15 @@ A circle is just a k-gon where $k=\infty$ thus the above holds for a circle.
 
 \subsection*{Problem 1.10b}
 
-
-A circle has decreasing slope then increasing slope, thus if it appears in two places on the convex hull, then the hull violates the requirement that slope is decreasing. In this case, it would not be a convex set
+Assume that the convex hull appears on the boundary of a circle twice. There are two cases to consider.\\
+Case 1: The convex hull is traveling along the circle and then goes inside the circle before going back to the boundary. \\
+Case 2: The convex hull is traveling along the circle and then goes outside the circle before going back to the boundary.\\
 \\
-TODO: Improve the proof of a and b
+In case 1, you can connect the two end points and you will connect two points in the hull but part of the line will be outside the hull, thus it won't be a true convex hull, a contradiction\\
+\\
+In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This violates a basic constraint of convex hull, so we have a contradiction. \\
+\\
+Since we have a contradiction for both cases where a convex hull appears in two different places on the boundary of a circle, it is impossible for that to occur, thus the convex hull is either on the boundary once or not at all. 
 
 \subsection*{Problem 1.10c}
 
@@ -87,7 +92,13 @@ TODO: Improve the proof
 
 \subsection*{Problem 1.10d}
 
-TODO: Figure out algorithm for convex hull
+The idea of the algorithm is that we will find the convex hull of the centers and then use that to get the total convex hull. Here is the algorithm:\\
+1. Find the convex hull of the centers\\
+2. For every line pq in that convex hull\\
+			Find line perpendicular to pq that passes through p and line perpendicular to pq that passes through q, call them p1 and q1\\
+			Find the interesection of the p circle with p1 and intersection of q circle with q1, call them p*, q*
+			Connect p* and q* to be a line
+3. The convex hull are all the straight lines and the circle boundaries between them
 
 \subsection*{Problem 1.10e}
 
@@ -100,7 +111,7 @@ TODO: Figure out algorithm for hull if circles have different radii
 
 The dual of a collection of points inside a triangle with vertices p,q,r will be a collection of lines from the union of the double wedges for pq, qr, and pr. 
 \\
-When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 7 faces when you include the inner triangle formed. In the following figure the dual ends up being everything except section 5 and 6.  
+When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 7 faces when you include the inner triangle formed. In the following figure the dual ends up being everything except section 5 and 6. It will end up looking like a double wedge with an extra triangle in the middle. 
 
 \begin{figure}[H]
 \centering
@@ -125,6 +136,12 @@ The horizontal line has slope $0$ thus the wedge will cross that line if the slo
 Thus the following line segments have duals that are top-bottom double wedges:
 - Line segments where both x-coordinates are positive and the slope is positive
 - Line segments where both x-coordinates are negative and the slope is negative
+
+\subsection*{Problem 8.2b Alternate}
+
+In the illustration, the left-right double wedge is formed by the line segment. The dual lines all meet in that point since the primal points are co-linear. If we take the entire line formed by pq, the dual of that is the union of all lines that pass through that point. For the top-bottom double wedge, we want that whole union minus the left-right double wedge. \\
+\\
+Thus if you take the line $cx + d$ and take the points $p,q$ on it, then the two rays that are formed when you compute $(cx+d)-pq$ have a dual that is a top-bottom double wedge. 
 
 \section*{Problem 8.6}
 
