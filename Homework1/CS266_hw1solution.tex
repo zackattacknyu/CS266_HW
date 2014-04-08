@@ -33,7 +33,7 @@
 
 \title{CS 266 Homework 1}
 \author{Zachary DeStefano, 15247592}
-\date{Due Date: April 10}
+\date{Due Date: April 10, 2014}
 
 \maketitle
 
@@ -98,9 +98,9 @@ TODO: Figure out algorithm for hull if circles have different radii
 
 \subsection*{Problem 8.2a}
 
-The dual of a collection of points inside a triangle with vertices p,q,r will be a random collection of lines. That is because the dual of a triangle ends up being the whole plane. 
+The dual of a collection of points inside a triangle with vertices p,q,r will be a collection of lines from the union of the double wedges for pq, qr, and pr. 
 \\
-When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 7 faces when you include the inner triangle formed. There are three line segments that are each double wedges, thus the union is 6 wedges, which equates to the whole plane. 
+When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 7 faces when you include the inner triangle formed. In the following figure the dual ends up being everything except section 5 and 6.  
 
 \begin{figure}[H]
 \centering
@@ -110,13 +110,21 @@ When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 
 
 \subsection*{Problem 8.2b}
 
-A line segment with negative slope with dualize to a top-bottom double wedge. This is because the x-coordinate is decreasing, meaning that the slope is decreasing so the wedge will appear in top-bottom order. 
-
-\begin{figure}[H]
-\centering
-\includegraphics[height=4in]{cs266dual2.jpg}
-\caption{Illustration of the wedges}
-\end{figure}
+We will define a top-bottom double wedge in the following manner:
+\\
+- Take the intersection point of the double wedge $(x',y')$
+\\
+- Draw a horizontal line at that point, meaning the line $x=x'$. 
+\\
+- We have a top-bottom double wedge if one lies above that line and one lies below that line
+\\
+\\
+The horizontal line has slope $0$ thus the wedge will cross that line if the slope goes from positive to negative. However, if the slope starts positive and increases or the slope starts negative and decreases, then it won't cross that line and will therefore be a top-bottom double wedge. 
+\\
+\\
+Thus the following line segments have duals that are top-bottom double wedges:
+- Line segments where both x-coordinates are positive and the slope is positive
+- Line segments where both x-coordinates are negative and the slope is negative
 
 \section*{Problem 8.6}
 
