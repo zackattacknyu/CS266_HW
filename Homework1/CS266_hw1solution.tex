@@ -52,10 +52,12 @@ Since the endpoints are on the line, a convex set of the n line segments must co
 
 Let P be a non-convex polygon. Algorithm for finding the convex hull of P in O(n) time:
 \\
-1. Find left-most point and right-most point in polygon. 
-2. To compute the upper hull, build up the line segments using the same algorithm as ConvexHull and use the vertices in lexicographic order of the polygon
-3. Add or delete vertices depending on whether the slope is decreasing. 
-TODO: Improve this description
+1. Find left-most point and right-most point in polygon, call them $p_1$ and $q_1$. \\
+2. Let $p_1,...,p_n$ be the points from $p_1$ to $q_1$ in clockwise order in the polygon and let $p_n=q_1$. \\
+3. To compute the upper hull, follow steps 3-6 of the ConvexHull algorithm in section 1.1 for the points $p_1,...,p_n$\\
+4. Let $q_1,...,q_n$ be the points from $q_1$ to $p_1$ in clockwise order in the polygon and let $q_n=p_1$. \\
+5. To compute the lower hull, repeat step 3 but with the points $q_1,...,q_n$.\\
+
 
 \section*{Problem 1.10}
 
@@ -81,14 +83,14 @@ In case 2, for the upper hull, the slope of the hull will have to increase to le
 \\
 Since we have a contradiction for both cases where a convex hull appears in two different places on the boundary of a circle, it is impossible for that to occur, thus the convex hull is either on the boundary once or not at all. 
 
+TODO: Improve this as it only works when the circles have equal radii
+
 \subsection*{Problem 1.10c}
 
-Take the convex hull of S'. 
-\\
-Assume that a point is in the convex hull of S' but the corresponding circle is not on the boundary of the convex hull. This turns out to be a contradiction as there would be some other unaccounted for circle. \\
-Assume that a circle is in the convex hull of S but its center is not in S', then there is some circle that was not considered and this eventually leads to a contradiction
-\\
-TODO: Improve the proof
+Take the convex hull of S'. \\
+For the forward proof, assume that a point p is in convex hull of S' but the corresponding circle p* is not in the convex hull of S. This means that p* must lie inside the convex hull of S. Take the circles q_1*,...,q_n* on the convex hull boundary and let q_1,...,q_n be the corresponding centers. p will have to lie somewhere in the convex hull of S' but there will be non-convexity with q_1,...,q_n and p since the circle is inside the convex hull and they all have equal radii. This leads to a contradiction. \\
+For the backward proof, assume that a circle p* is in the convex hull of S but the corresponding center p is not in the convex hull of S'. This means that p must lie inside the convex hull of S'. Take the circles and this means that there will be non-convexity with the circles and p* which is a contradiction.
+TODO: Improve this proof
 
 \subsection*{Problem 1.10d}
 
