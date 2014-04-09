@@ -79,11 +79,11 @@ Case 2: The convex hull is traveling along the circle and then goes outside the 
 \\
 In case 1, you can connect the two end points and you will connect two points in the hull but part of the line will be outside the hull, thus it won't be a true convex hull, a contradiction\\
 \\
-In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This violates a basic constraint of convex hull, so we have a contradiction. \\
+In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This will violate a basic constraint of the convex hull for the circles just in the upper hull and ones just in the lower hull. For the left most and right most circle that will be in both hulls, the two parts will be connected, so it will still be on a single part of the boundary. Lastly, we need to cover the case where a circle is in the upper hull and lower hull but is not the rightmost or leftmost circle. WLOG assume that it is above the right-most circle. Since the circles have equal radii, this will end up violating convexity. In the case where the circle is at the same y-coordinate as both the left-most and right-most circles, then convex hull will only cover two points on the circle and will thus still be straight lines and not consist of the boundary.
+\\
+**INSERT PICTURE OF THIS EDGE CASE**
 \\
 Since we have a contradiction for both cases where a convex hull appears in two different places on the boundary of a circle, it is impossible for that to occur, thus the convex hull is either on the boundary once or not at all. 
-
-TODO: Improve this as it only works when the circles have equal radii
 
 \subsection*{Problem 1.10c}
 
