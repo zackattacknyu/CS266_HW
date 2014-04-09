@@ -88,7 +88,7 @@ TODO: Improve this as it only works when the circles have equal radii
 \subsection*{Problem 1.10c}
 
 Take the convex hull of S'. \\
-For the forward proof, assume that a point p is in convex hull of S' but the corresponding circle p* is not in the convex hull of S. This means that p* must lie inside the convex hull of S. Take the circles q_1*,...,q_n* on the convex hull boundary and let q_1,...,q_n be the corresponding centers. p will have to lie somewhere in the convex hull of S' but there will be non-convexity with q_1,...,q_n and p since the circle is inside the convex hull and they all have equal radii. This leads to a contradiction. \\
+For the forward proof, assume that a point p is in convex hull of S' but the corresponding circle p* is not in the convex hull of S. This means that p* must lie inside the convex hull of S. Take the circles $q_1*,...,q_n*$ on the convex hull boundary and let $q_1,...,q_n$ be the corresponding centers. p will have to lie somewhere in the convex hull of S' but there will be non-convexity with $q_1,...,q_n$ and p since the circle is inside the convex hull and they all have equal radii. This leads to a contradiction. \\
 For the backward proof, assume that a circle p* is in the convex hull of S but the corresponding center p is not in the convex hull of S'. This means that p must lie inside the convex hull of S'. Take the circles and this means that there will be non-convexity with the circles and p* which is a contradiction.
 TODO: Improve this proof
 
@@ -107,7 +107,14 @@ The idea of the algorithm is that we will find the convex hull of the centers an
 
 \subsection*{Problem 1.10e}
 
-TODO: Figure out algorithm for hull if circles have different radii
+The idea for this algorithm is to break up the circles into different points, find the convex hull of those points, and then follow the convex hull to get the boundaries. 
+\\
+1. Take the centers of the circles.
+2. For each pair of centers p and q
+		Find line perpendicular to pq that passes through p and the one that passes through q
+		Label the four intersection points that results and put them in Q
+3. Find the convex hull of Q
+4. Follow the convex hull of Q and make the hull the circle boundary if the line goes inside one of the circles
 
 
 \section*{Problem 8.2}
