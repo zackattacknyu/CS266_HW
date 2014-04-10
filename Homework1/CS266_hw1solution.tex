@@ -112,10 +112,18 @@ In case 1, you can connect the two end points and you will connect two points in
 \\
 In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This will violate a basic constraint of the convex hull for the circles just in the upper hull and ones just in the lower hull. \\
 For the left most and right most circle that will be in both hulls, the two parts will be connected, so it will still be on a single part of the boundary.\\
-Lastly, we need to cover the case where a circle is in the upper hull and lower hull but is not the rightmost or leftmost circle. WLOG assume that it is above the right-most circle. Since the circles have equal radii, this will end up violating convexity. In the case where the circle is at the same y-coordinate as both the left-most and right-most circles, then convex hull will only cover two points on the circle and will thus still be straight lines and not consist of the boundary.
-\\
-**INSERT PICTURE OF THIS EDGE CASE**
-\\
+Lastly, we need to cover the case where a circle is in the upper hull and lower hull but is not the rightmost or leftmost circle. WLOG assume that it is above the line that goes from the left-most point to right-most point. Since the circles have equal radii, the bottom of the left-most circle and bottom of the right-most circle will connect together with a line that goes outside the hull, violating convexity.\\
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw1prob1-10b_1.jpg}
+\caption{In Red is the straight line part of the hull, Black is the circles. The gray line shows the violation of convexity}
+\end{figure}
+In the case where the center of the circle is on the line from the left-most point to right-most point, the convex hull will only cover two points on the circle and will thus still be straight lines and not consist of the boundary.
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw1prob1-10b_2.jpg}
+\caption{In Red is the straight line part of the hull, Black is the circles.}
+\end{figure}
 Since we have a contradiction for both cases where a convex hull appears in two different places on the boundary of a circle, it is impossible for that to occur, thus the convex hull is either on the boundary once or not at all. 
 
 \subsection*{Problem 1.10c}
