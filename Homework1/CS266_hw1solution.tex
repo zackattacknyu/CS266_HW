@@ -26,13 +26,12 @@
 \setlength{\parskip}{1.2ex plus0.3ex minus 0.3ex}
 
 
-\thispagestyle{empty} \pagestyle{myheadings} \markright{Homework
-1: CS 266, Computational Geometry: Spring 2014}
+\thispagestyle{empty} \pagestyle{myheadings} \markright{G}
 
 
 
-\title{CS 266 Homework 1}
-\author{Zachary DeStefano, 15247592}
+\title{CS 266, Computational Geometry, Homework 1}
+\author{Zachary DeStefano, PhD student, 15247592}
 \date{Due Date: April 10, 2014}
 
 \maketitle
@@ -72,8 +71,6 @@ Thus the algorithm takes O(n) time total.
 
 
 \section*{Problem 1.10}
-
-Let S be a set of n possibly intersecting unit circles
 
 \subsection*{Problem 1.10a}
 
@@ -128,10 +125,17 @@ Since we have a contradiction for both cases where a convex hull appears in two 
 
 \subsection*{Problem 1.10c}
 
-Take the convex hull of S'. \\
-For the forward proof, assume that a point p is in convex hull of S' but the corresponding circle p* is not in the convex hull of S. This means that p* must lie inside the convex hull of S. Take the circles $q_1*,...,q_n*$ on the convex hull boundary and let $q_1,...,q_n$ be the corresponding centers. p will have to lie somewhere in the convex hull of S' but there will be non-convexity with $q_1,...,q_n$ and p since the circle is inside the convex hull and they all have equal radii. This leads to a contradiction. \\
-For the backward proof, assume that a circle p* is in the convex hull of S but the corresponding center p is not in the convex hull of S'. This means that p must lie inside the convex hull of S'. Take the circles and this means that there will be non-convexity with the circles and p* which is a contradiction.
-TODO: Improve this proof
+For the forward proof, assume that a point p is in convex hull of S' but the corresponding circle p* is not in the convex hull of S. 
+\\This means that p* must lie inside the convex hull of S. 
+\\Take the circles $q_1*,...,q_n*$ on the convex hull boundary and let $q_1,...,q_n$ be the corresponding centers. 
+\\Since all the circles have equal radii, this means that p will be inside the polygon $q_1,...,q_n$ \\
+However p is on the convex hull, so this violates convexity. This is a contradiction.\\
+\\
+For the backward proof, assume that a circle p* is in the convex hull of S but the corresponding center p is not in the convex hull of S'. \\
+This means that p must lie inside the convex hull of S'.
+\\Take the circle centers $q_1,...,q_n$ on the convex hull of S and let $q_1*,...,q_n*$ be the corresponding circles.
+\\Since all the circles have equal radii, this means that p* will be inside the polygon formed by $q_1,...,q_n*$\\
+However, p* is on the convex hull, so this violates convexity, leading to a contradiction. 
 
 \subsection*{Problem 1.10d}
 
@@ -143,20 +147,35 @@ The idea of the algorithm is that we will find the convex hull of the centers an
 			If there are only two circles, then connect p1* and q1* in one segment and then p2* and q2* in another segment. The hull is then p1*,q1*,q2*,p2*,p1*\\
 			If there are more than two circles, then make p1*,q1* the pair that outside the convex hull of the centers. Connect p1* and q1* and make that part of the hull\\
 3. You now have circles and straight lines. Travel along the straight lines and add it to hull. When you reach a circle, you have to decide which part of the boundary to add to the hull\\
-			Add the part of that circle that will make slope decrease if doing the upper hull.\\
-			Add the part to make the slope increase if doing the lower hull.
+			-Add the part of that circle that will make slope decrease if doing the upper hull.\\
+			-Add the part to make the slope increase if doing the lower hull.
 
 \subsection*{Problem 1.10e}
 
-The idea for this algorithm is to break up the circles into different points, find the convex hull of those points, and then follow the convex hull to get the boundaries. 
+This algorithm will build up the hull circle by circle.\\
+1. Initialize hull H with circle 1
+2. For each circle C\\
+	- Find the center of hull H and call it h. Can be done by getting the center of the left-most, right-most, upper-most and lower-most points on the hull. \\
+	- Call the center of the circle c. \\
+	- Find the lines $H_1$ and $H_2$ that are tangent to the hull and perpendicular to the line formed by hc. \\
+	- Find the lines $C_1$ and $C_2$ that are tangent to the circle and perpendicular to the line formed by hc. \\
+	- Search the tangent lines from $H_1$ to $H_2$ until you find one that goes through $C_1$ and $C_2$ and touches the circle once. Add that line to the hull H. \\
+	- Repeat above step for tangent lines from $H_2$ to $H_1$. 
+	- Add the arc in the circle between those lines to the hull H\\
+\begin{figure}[H]
+\centering
+\includegraphics[height=4in]{hw1prob1-10e.jpg}
+\caption{Illustration of the above parts. The gray lines are the parts of the hull that get added}
+\end{figure}
+Correctness:\\
+At each step, we are making sure to add the necessary part of the circle and we are also ensuring convexity.\\
 \\
-1. Take the centers of the circles.
-2. For each pair of centers p and q
-		Find line perpendicular to pq that passes through p and the one that passes through q
-		Label the four intersection points that results and put them in Q
-3. Find the convex hull of Q
-4. Follow the convex hull of Q and make the hull the circle boundary if the line goes inside one of the circles
-
+Run-time:\\
+The loops is run on the n circles. \\
+For each circle, there is a constant number of operations except for the searching. \\
+The searching can be done in $log(n)$ time by using a binary search tree to implement it. \\
+The total run time is thus $O(n log(n) )$
+\newpage
 
 \section*{Problem 8.2}
 
@@ -172,11 +191,13 @@ When you take $p*, q*, r*$, the division of the plane forms 6 wedges. There are 
 \caption{Illustration of the wedges}
 \end{figure}
 
+\newpage
+
 \subsection*{Problem 8.2b}
 
 In the illustration, the left-right double wedge is formed by the line segment. The dual lines all meet in that point since the primal points are co-linear. If we take the entire line formed by pq, the dual of that is the union of all lines that pass through that point. For the top-bottom double wedge, we would then want that whole union minus the left-right double wedge. \\
 \\
-For a line segment $pq$ it can be described as ${tp + (1-t)q}$ for $0 \leq t \leq 1$. The two rays we want are the whole line minus that segment, thus it is ${tp + (1-t)q}$ for $t < 0$ and $t > 1$. 
+A line segment $pq$ can be described as $\{tp + (1-t)q\}$ for $0 \leq t \leq 1$. The two rays we want whose dual is a top-bottom double wedge will be the whole line minus that segment thus it is $\{tp + (1-t)q\}$ for $t < 0$ and $t > 1$. 
 
 \section*{Problem 8.6}
 
