@@ -43,7 +43,7 @@
 
 \subsection*{Problem 1.6 Part A}
 
-Since the convex hull is a convex set containing all the points, it holds that the convex hull of the 2n endpoints is a convex set that contains all the line segments. Due to the convexity, all the line segments will be in the convex hull. 
+Since the convex hull is a convex set containing all the points, if we take the convex hull of the 2n endpoints, then by convexity, all the line segments will be in the hull. 
 \\
 \\
 Since the endpoints are on the line, a convex set of the n line segments must contain all the 2n endpoints. Since the convex hull of 2n endpoints is the smallest convex set that contains all the endpoints, it is thus the smallest convex set that contains all the n line segments, thus it is the convex hull of the line segments. 
@@ -54,9 +54,21 @@ Let P be a non-convex polygon. Algorithm for finding the convex hull of P in O(n
 \\
 1. Find left-most point and right-most point in polygon, call them $p_1$ and $q_1$. \\
 2. Let $p_1,...,p_n$ be the points from $p_1$ to $q_1$ in clockwise order in the polygon and let $p_n=q_1$. \\
-3. To compute the upper hull, follow steps 3-6 of the ConvexHull algorithm in section 1.1 for the points $p_1,...,p_n$\\
+3. To compute the upper hull, follow steps 3-6 of the ConvexHull algorithm in section 1.1 for the points $p_1,...,p_n$ however in step 5, add the condition that the x-coordinate needs to increase in addition to the last three points making a right turn.\\
 4. Let $q_1,...,q_n$ be the points from $q_1$ to $p_1$ in clockwise order in the polygon and let $q_n=p_1$. \\
-5. To compute the lower hull, repeat step 3 but with the points $q_1,...,q_n$.\\
+5. To compute the lower hull, repeat step 3 but with the points $q_1,...,q_n$. The additional condition will be that the x-coordinate needs to decrease. 
+\\
+\\
+Correctness:\\
+At each step, we are both making a right turn and ensuring that the x-coordinate will increase, thus the convexity will be preserved. \\
+We are only including points on the polygon in the algorithm thus we will get the smallest convex set. \\
+\\
+Run time:\\
+Finding the left and right most points will take O(n) time.\\
+The rest of the algorithm has the same run time as ConvexHull after the sorting, which is O(n).\\
+Thus the algorithm takes O(n) time total.
+
+\newpage
 
 
 \section*{Problem 1.10}
@@ -67,9 +79,28 @@ Let S be a set of n possibly intersecting unit circles
 
 Proof that the convex hull of S consists of straight lines and pieces of circles in S. 
 \\
-A circle can be considered an infinite sided polygon. With this in mind, consider a set of regular k-gons with radius of 1. The convex hull will be convex set that contains all the vertices of the k-gons. There will thus be straight lines between each of the k-gons and parts of the hull be along the k-gon. 
 \\
-A circle is just a k-gon where $k=\infty$ thus the above holds for a circle. 
+Take a set of lines outside the area of the circles and move them toward the circles to make half-planes. The intersection of these half-planes will be a convex polygon that surrounds all the circles because we have a finite number of circles. \\
+\begin{figure}[H]
+\centering
+\includegraphics[height=4in]{hw1prob1-10a_1.jpg}
+\caption{In black are the circles and in red is the convex polygon}
+\end{figure}
+In the corners of this polygon, there will be regions whose points do not need to be in the convex hull\\
+In this case, the part of the hull will the arc formed in that corner instead of the corner itself. 
+\\    This can be shown from the definition of hull as the intersection of all the half-planes with points in the hull. 
+\\     If we form half-planes from the tangeants to the circle in this particular arc, then the intersection will definitely contain the circle. 
+\\     It will only contain the circle:
+\\					- Take point p outside circle and point c that is the center of the circle
+\\					- Find the intersection of the circle with segment pc, call it q
+\\					- Take the tangent line at q
+\\					- The half-plane formed by it will contain the circle and not p
+\begin{figure}[H]
+\centering
+\includegraphics[height=2in]{hw1prob1-10a_2.jpg}
+\caption{The points p,q,c illustrated by zooming in on the left part of the above figure.}
+\end{figure}
+We have now constructed the intersection of all the half-planes that contain the circles, thus it is the convex hull. As shown above, it consists of straight lines and parts of the boundary of a circle. 
 
 \subsection*{Problem 1.10b}
 
@@ -79,7 +110,9 @@ Case 2: The convex hull is traveling along the circle and then goes outside the 
 \\
 In case 1, you can connect the two end points and you will connect two points in the hull but part of the line will be outside the hull, thus it won't be a true convex hull, a contradiction\\
 \\
-In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This will violate a basic constraint of the convex hull for the circles just in the upper hull and ones just in the lower hull. For the left most and right most circle that will be in both hulls, the two parts will be connected, so it will still be on a single part of the boundary. Lastly, we need to cover the case where a circle is in the upper hull and lower hull but is not the rightmost or leftmost circle. WLOG assume that it is above the right-most circle. Since the circles have equal radii, this will end up violating convexity. In the case where the circle is at the same y-coordinate as both the left-most and right-most circles, then convex hull will only cover two points on the circle and will thus still be straight lines and not consist of the boundary.
+In case 2, for the upper hull, the slope of the hull will have to increase to leave the hull. For the lower hull, the slope will have to decrease. This will violate a basic constraint of the convex hull for the circles just in the upper hull and ones just in the lower hull. \\
+For the left most and right most circle that will be in both hulls, the two parts will be connected, so it will still be on a single part of the boundary.\\
+Lastly, we need to cover the case where a circle is in the upper hull and lower hull but is not the rightmost or leftmost circle. WLOG assume that it is above the right-most circle. Since the circles have equal radii, this will end up violating convexity. In the case where the circle is at the same y-coordinate as both the left-most and right-most circles, then convex hull will only cover two points on the circle and will thus still be straight lines and not consist of the boundary.
 \\
 **INSERT PICTURE OF THIS EDGE CASE**
 \\
