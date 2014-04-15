@@ -38,9 +38,41 @@
 
 \vfill\eject
 
-\section*{Problem 4}
+\subsection*{Problem 2.3}
 
-\subsection*{Problem 4a}
+Change the code of Algorithm FINDINTERSECTIONS (and of the procedures
+that it calls) such that the working storage is O(n) instead of
+O(n+k).
+
+
+\subsection*{Problem 2.11}
+
+Let S be a set of n circles in the plane. Describe a plane sweep algorithm to compute all intersection points between the circles. (Because we deal with circles, not discs, two circles do not intersect if one lies entirely
+inside the other.) Your algorithm should run in O((n+k) logn) time,
+where k is the number of intersection points.
+\\
+First, two circles will intersect in at most two points if they are not the exact same circle. Here is the proof:
+\\
+Any two circles can be translated and rotated so that one of the centers is the origin and the other center is on the x-axis. Thus assume the two circles have centers $(0,0)$ and $(a,0)$ and radii of $r_1$ and $r_2$. We will assume distinct centers so that $a \neq 0$. The two circles are thus described by:\\
+\[
+x^2 + y^2 = r_1^2
+\]
+\[
+(x-a)^2 + y^2 = r_2^2
+\]
+Let $R=r_1^2-r_2^2$. After subtracting the two equations we have
+\[
+2ax - a^2 = R
+\]
+We can turn this into
+\[
+x = \frac{a^2 + R}{2a}
+\]
+If $x>r_1$ or $x < -r_1$ then we know there is no intersection point. If $x=r_1$ or $x=-r_1$ then there is 1 intersection point. If $-r_1 \leq x \leq r_1$, then from the equation there is one matching x which means two matching $(x,y)$ pairs, thus two intersection points. Since $a \neq 0$ we do not have to worry about any more intersections. 
+
+\subsection*{Problem 8.4}
+
+\subsection*{Problem 8.14}
 
 
 %\begin{figure}[H]
