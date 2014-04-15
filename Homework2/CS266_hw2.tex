@@ -72,15 +72,39 @@ If $x>r_1$ or $x < -r_1$ then we know there is no intersection point. If $x=r_1$
 
 \subsection*{Problem 8.4}
 
-Let L be a set of n lines in the plane. Give an O(nlogn) time algorithm to
+Let L be a set of n lines in the plane. Give an O($n \, logn$) time algorithm to
 compute an axis-parallel rectangle that contains all the vertices of A(L)
 in its interior.
+\\
+\\
+If you take the dual of the n lines, you get n points. \\
+An intersection occurs when 
+\[
+x = \frac{b_2-b_1}{m_2-m_1}
+\]
+\[
+y = \frac{b_2m_1 - b_1m_2}{m_2-m_1}
+\]
 
 
 \subsection*{Problem 8.14}
 
-Let S be a set of n points in the plane. Give an O(n2) time algorithm to
+Let S be a set of n points in the plane. Give an O($n^2$) time algorithm to
 find the line containing the maximum number of points in S.
+\\
+\\
+Since a line through a pair of points in the primal plane becomes a vertex in the dual plane, we just have to compute the dual of the points and then compute which vertex has the most number of lines passing through it. 
+\\
+Here is the algorithm:\\
+1. Take the dual of the n points\\
+2. Use the arrangment algorithm to find the vertices. \\
+3. Find which vertex contains the greatest number of lines. \\
+\\
+\\
+Complexity analysis:\\
+Taking the dual will take O(n) time. \\
+Computing the arrangement takes O($n^2$) time. \\
+Going through the vertices will take O($n^2$) time
 
 
 %\begin{figure}[H]
