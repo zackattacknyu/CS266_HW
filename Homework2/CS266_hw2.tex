@@ -55,6 +55,14 @@ of two segments must be deleted when they stop being adjacent. These segments
 must become adjacent again before the intersection point is reached, so the
 intersection point will still be reported correctly.\\
 \\
+This can be done by modifying the following line in FindNewEvent:\\
+if $s_l$ and $s_r$ intersect below the sweep line, or on it and to the right of the
+current event point p, and the intersection is not yet present as an
+event in Q
+\\
+The modification is to make sure $s_l$ and $s_r$ are adjacent to each other before adding the intersection as an event. \\
+\\
+This will ensure that only adjacent line segments are in the event queue, thus the storage is $O(n)$
 
 \subsection*{Problem 2.11}
 
