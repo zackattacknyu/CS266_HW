@@ -77,7 +77,6 @@ compute an axis-parallel rectangle that contains all the vertices of A(L)
 in its interior.
 \\
 \\
-If you take the dual of the n lines, you get n points. \\
 An intersection occurs when 
 \[
 x = \frac{b_2-b_1}{m_2-m_1}
@@ -85,6 +84,37 @@ x = \frac{b_2-b_1}{m_2-m_1}
 \[
 y = \frac{b_2m_1 - b_1m_2}{m_2-m_1}
 \]
+Thus if we take the minimum of $m_2-m_1$ and the maximum of $b_2-b_1$, we will get the maximum possible x coordinate of an intersection. If we do the same thing, but with inverse slope and y intercept, we will get the maximum possible y coordinate of an intersection. This fact will allow us to get a bounding box. We will later be able to get a tight bounding box.\\
+\\
+Here is algorithm for the initial bounding box:\\
+1. Setup the following sets\\
+		- Set B of y-intercepts of the lines\\
+		- Set M of slopes of the lines\\
+2. Compute the set $B*$ of x-intercepts of the lines. \\
+			- for an individual $(m,b)$, this is equal to $-\frac{b}{m}$\\
+3. Compute the set $M*$ of inverse slopes of the lines, meaning $1/m$. \\
+4. Go through the set $B$ to get the min and max. Label them $b_{min}$ and $b_{max}$.\\
+5. Sort the set M and label the elements $m_1,...,m_n$ which are in ascending order. \\
+6. Find the min of $m_i - m_j$ for $1 \leq i,j \leq n$. \\
+		Let $m'_{min} = \infty$\\
+		For $i = 1\rightarrow n-1$\\
+		- If $m_{i+1} - m_i < m'_{min}$ \\
+		---    -Set $m'_{min} = m_{i+1}-m_i$\\
+7. Set $x_{max} = \frac{b_{max}-b_{min}}{m'_{min}}$\\
+8. Set $x_{min} = -x_{max}$\\
+9. Repeat steps 4-8 for $B*$ and $M*$ however in step 7-8, they will be $y_{max}$ and $y_{min}$. \\
+10. The points $x_{min},x_{max},y_{min},y_{max}$ gives a bounding box\\
+\\
+Running time:\\
+Step 1-4 all take O(n) time.\\
+Step 5 will take O($n \, log n$) time. \\
+Step 6 will take O(n) time. \\
+The rest of the steps are constant time, except 9 which will be O($n log n$) time. \\
+The total running time is thus O($n log n$) time. \\
+\\
+Correctness:\\
+We showed above that the max possible difference in intercepts divided by the minimum possible difference in slopes gets the maximum x coordinate. The same argument will work with y coordinates. By the same token, if we make that fraction negative, then that is the minimum possible x coordinate and then y coordinate. Thus it is just left to prove that we have the max possible slope difference and the min possible intercept difference. \\
+For the intercepts, take $b_1,...,b_n$ to be the intercepts in sorted ascending order. \\Take any $1 \leq i,j \leq n$ where $i < j$. \\It suffices to show that $b_n - b_1 \geq b_j - b_i$. \\
 
 
 \subsection*{Problem 8.14}
