@@ -113,9 +113,47 @@ The rest of the steps are constant time, except 9 which will be O($n log n$) tim
 The total running time is thus O($n log n$) time. \\
 \\
 Correctness:\\
-We showed above that the max possible difference in intercepts divided by the minimum possible difference in slopes gets the maximum x coordinate. The same argument will work with y coordinates. By the same token, if we make that fraction negative, then that is the minimum possible x coordinate and then y coordinate. Thus it is just left to prove that we have the max possible slope difference and the min possible intercept difference. \\
+We showed above that the max possible difference in intercepts divided by the minimum possible difference in slopes gets the maximum x coordinate. The same argument will work with y coordinates. By the same token, if we make that fraction negative, then that is the minimum possible x coordinate and then y coordinate. Thus it is just left to prove that we have the min possible slope difference and the max possible intercept difference. \\
+\\
+Proof of Intercept Difference: \\
 For the intercepts, take $b_1,...,b_n$ to be the intercepts in sorted ascending order. \\Take any $1 \leq i,j \leq n$ where $i < j$. \\It suffices to show that $b_n - b_1 \geq b_j - b_i$. \\
+This can be rearranged to $b_n-b_j \geq b_1-b_i$. \\
+Since $b_n$ is the maximum, the left hand side is positive and since $b_1$ is the minimum, the right hand side is negative, thus the inequality holds. \\
+\\
+Proof of Slope Difference: \\
+For the slopes, we will prove that the min difference has to be between adjacent entries in the sorted list. \\
+Assume that for some $i < j < k$, the min difference in the set is $m_k-m_i$ however $m_j$ is between them. This means that $m_k-m_i \leq m_j-m_i$ which implies that $m_k \leq m_j$ which is a contradiction because this is a sorted list. \\
+\\
+Here is the algorithm to tighten the bounding box:\\
+1. Take $y_{max}$ and compute the x-coordinates of the lines. \\
+2. Sort the lines into $l_1,...,l_n$ by their x-coordinate at $y_{max}$. \\
+3. Initialize $y'_{max} = -\infty$. \\
+4. For each adjacent pair of lines in the sorted list, $l_{i+1}$ and $l_i$\\
+- Let $(x_i,y_i)$ be the intersection of $l_{i+1}$ and $l_i$\\
+- If $y_i > y'_{max}$ then set $y'_{max} = y_i$\\
+5. Repeat steps 1-4 but for $y_{min}$ (TODO: ADD IN DETAILS)\\
+6. Repeat steps 1-5 but for the x coordinates\\
+7. The tight bounding box is now $x'_{min}, x'_{max}, y'_{min}, y'_{max}$\\
+\\
+Running time:\\
+All the steps except 2 and the repeats will take constant amount of time or O(n) time. \\
+Step 2 will take O($n log n$) time for the sorting. \\
+Computing the initial bounding box will take O($n log n$) time from above. \\
+Thus the total running time is still O($n log n$). \\
+\\
+Correctness:
+\\
+WLOG, we will prove that the procedure is correct for getting the maximum y-value. \\
+We already know that we have an upper bound for the maximum y vertex value. \\
+It just suffices to prove that we only need to test adjacent lines at that upper bound. \\
+Assume that we have three adjacent lines at that y-coordinate, $i < j < k$ and we have a case where the highest vertex is with the $(i,k)$ pair and not the $(i,j)$ pair or the $(j,k)$ pair. \\
+If we follow the $j$ line downward from the max y, then because it is between $i$ and $k$, it must intersect them before $i$ and $k$ meet. At this intersection, there will be higher y-coordinate at the $(i,k)$ pair, a contradiction. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw2prob8_4_diagram.png}
+\caption{The above argument with the $i,j,k$ lines illustrated}
+\end{figure} 
 
 \subsection*{Problem 8.14}
 
