@@ -73,6 +73,7 @@ Call the set of arcs found S\\
 2. Run FindIntersections(S) with the following changes\\
 - In line 4 of HandleEventPoint(p), do not report the intersection if the two arcs are part of the same circle\\
 - The FindNewEvent code stays the same, except that you should add both intersection points to the event queue in the case that there are two of them. \\
+- In line 6 of HandleEventPoint(p), be mindful of the fact that if the two parent circles have only one intersection point, then the ordering of arcs won't change below the intersection point. \\
 \\
 Correctness:\\
 The plane sweep algorithm will detect all the arcs and two arcs will become adjacent right before an intersection, thus the intersections will be detected. \\
