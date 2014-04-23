@@ -84,10 +84,29 @@ In the following figure, the visible region is the triangles with an X inside th
 \caption{Parts of polygon visible from point p}
 \end{figure}
 
-The following procedure will be used:\\
-For each vertex v with unobstructed view of p:\\
-- Construct line segment from p, then passing through v, and ending at the next line segment in that direction. \\
-- All the triangles that have just been constructed that are around p are the visible region. 
+We will want to visit the vertices in lexicographic order of the polygon. 
+For visibility, we always want to make a right turn. \\
+\\
+Here is the algorithm:\\
+1. Find the vertex $v_0$ that is closest to $P$ as it will be visible. \\
+- You can take all the vertices and compute the slopes of the lines between them and $P$. \\
+- You will then go through the list and find the min. \\
+2. Draw a line from $v_0$ to $P$ and make $v_0$ our current point $p'$ in the traversal\\
+3. For each vertex v in lexicographic order starting from $v_1$, the one after $v_0$: \\
+- If vertex v takes a right turn away from $p'$, then add the line from $P$ to $v$ to our set and let $p'=v$\\
+- Otherwise keep $p'$ the same and move onto the next vertex. \\
+4. Go through each pair of adjacent line segments $l$ and $l'$ and if they connect vertices that are not in lexicographic order, do the following:\\
+- For each line segment between the corresponding vertices for $l$ and $l'$:\\
+-    - If the line extending from $l$ intersects the line segment, then extend $l$ to the line segment\\
+-		 - If the line extending from $l'$ intersects the line segment, then extend $l'$ to the line segment \\
+\\
+Running time:\\
+Step 1 takes $O(n)$ time since we are passing analyzing each vertex in a constant number of operations. \\
+Step 2-3 takes $O(n)$ time since we are going in lexicographic order of the polygon. \\
+Step 4 takes $O(n)$ time since we are going through each line segment in the polygon at most twice with that step. \\
+The total running time is thus $O(n)$
+
+
 
 \newpage
 
