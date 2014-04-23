@@ -156,7 +156,16 @@ The visibility graph will have $V = (3n+2)$.\\
 For each vertex $v$ we have $|v| \leq 3n + 2$ for the number of vertices it is connected to. \\
 The max number of paths is the max number of sequences of such vertices. \\
 We need to start with $s$ and end with $t$ but the vertices in the middle do not matter. \\
-We end up with $(3n)!$ paths possible. 
+We end up with $(3n)!$ paths possible. \\
+\\
+We can tighten this when we consider that we can only be moving forward toward our point. \\
+Thus any path can only go along at most 2 edges per triangle. \\
+If we have to go through all n triangles and have to use two edges, then there are $2^n$ shortest paths. \\
+That ends up being an upper bound. \\
+\\
+If the triangles are not in the way at all, then the lower bound number of paths is 1. \\
+\\
+
 
 
 \end{document}
