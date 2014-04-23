@@ -101,10 +101,30 @@ time, leading to O($n^2$ logn)time for all sortings. Show that this can be
 improved to O($n^2$) time using dualization (see Chapter 8). Does this
 improve the running time of VISIBILITYGRAPH?\\
 \\
-Idea:\\
-Take the vertices and dualize them. \\
-Construct the arrangement of the resulting lines. \\
-Something in the arrangment tells you about how to construct the visibility graph
+If we take two points $a$ and $b$ and get their duals, $a*$ and $b*$, these lines will intersect assuming that $a$ and $b$ have different x-coordinates. \\
+Denote their intersection point as $p*$\\
+The dual of $p*$, which is the line $p$ in the primal plane will go through $a$ and $b$. \\
+Thus, the x-coordinate of $p*$ tells us the slope of the line through $a$ and $b$. \\
+\\
+There is a direct relationship between slope and angle. \\
+In the right half-plane the slope increases in counter-clockwise order from $-\infty$ to $\infty$. \\
+In the left half-plane, the slope increases in clockwise order from $-\infty$ to $\infty$. \\
+This means that if we split up the points into left and right half and then order them by the slopes, we will be able to get the radial order of the points. \\
+\\
+We can now translate these facts into a new algorithm:\\
+1. Dualize the points\\
+2. Compute the arrangement of the duals. \\
+3. For each vertex v in the primal plane:\\
+- Find the line v* in the dual and get its intersection points in the dual in x-coordinate order. \\
+- Go through the points and put the ones corresponding to the left points into $set_left$ and right points into $set_right$. \\
+- concatenate $set_left$ in increasing order with $set_right$ in decreasing order to get $vertices_in_radial_order$. \\
+\\
+Running time:\\
+Computing the arrangement takes O($n^2$). \\
+Since the arrangement was computed, there is no need to sort when finding the intersection points for $v*$ thus that step is O(n). \\
+This means that step 3 take O($n^2$). \\
+The total running time is thus O($n^2$) which is an improvement over the last algorithm. 
+
 
 \newpage
 
