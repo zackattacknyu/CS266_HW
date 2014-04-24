@@ -32,7 +32,7 @@
 
 \title{CS 266 Homework 3}
 \author{Zachary DeStefano, PhD Student, 15247592}
-\date{Due Date: April 24}
+\date{Due Date: April 24, 2014}
 
 \maketitle
 
@@ -68,37 +68,34 @@ Thus we have a total running time of $O(n)$
 
 \section*{Problem 3.14}
 
-Given a simple polygon P with n vertices and a point p inside it, show
-how to compute the region inside P that is visible from p.\\
-\\
-In the following figure, the visible region is the triangles with an X inside them. \\
-\begin{figure}[H]
-\centering
-\includegraphics[height=4in]{visible_regions.jpg}
-\caption{Parts of polygon visible from point p}
-\end{figure}
-
-We will want to visit the vertices in lexicographic order of the polygon. 
-For visibility, we always want to make a right turn. \\
+For this algorithm, we will go through each line segment in order and add the triangle it makes with $P$ to the visible region. If as we traverse the polygon we end up not going in clockwise order, then we will delete edges from the triangulation until we only have the visible ones. \\
 \\
 Here is the algorithm:\\
-1. Find the vertex $v_0$ that is closest to $P$ as it will be visible. \\
-- You can take all the vertices and compute the slopes of the lines between them and $P$. \\
-- You will then go through the list and find the min. \\
-2. Draw a line from $v_0$ to $P$ and make $v_0$ our current point $p'$ in the traversal\\
-3. For each vertex v in lexicographic order starting from $v_1$, the one after $v_0$: \\
-- If vertex v takes a right turn away from $p'$, then add the line from $P$ to $v$ to our set and let $p'=v$\\
-- Otherwise keep $p'$ the same and move onto the next vertex. \\
-4. Go through each pair of adjacent line segments $l$ and $l'$ and if they connect vertices that are not in lexicographic order, do the following:\\
-- For each line segment between the corresponding vertices for $l$ and $l'$:\\
--    - If the line extending from $l$ intersects the line segment, then extend $l$ to the line segment\\
--		 - If the line extending from $l'$ intersects the line segment, then extend $l'$ to the line segment \\
+1. Initialize list L of current edges. \\
+2. Initialize list T of triangles that make up visible region. \\
+3. Start at the left most point on the polygon and add the next segment in clockwise order to L. \\
+4. Add that first triangle to T. \\
+5. Initialize $v$ to be the endpoint of the first segment. \\
+6. For each segment $l$ in lexicographic order of the polygon:\\
+If its endpoint $v'$ is after $v$ in clockwise order, then add $l$ to $L$ and add the triangle to $T$. \\
+Otherwise, do the following: \\
+- delete segments from the bottom of $L$ until one of them, $l'$, intersects the line formed by $P$ and $v'$. Call the point $p'$. \\
+- delete the corresponding triangles from $T$. \\
+- delete the triangle formed by $l'$ and add in the one formed by $P$, $p'$ and the visible endpoint of $l'$. \\
+Once you are done processing this segment, set $v$ to be its endpoint. \\
+7. The set of triangles $T$ forms the visible region. \\
 \\
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{reordering_case.jpg}
+\caption{Diagram of a case where you need to redo the visible region}
+\end{figure}
+
 Running time:\\
-Step 1 takes $O(n)$ time since we are passing analyzing each vertex in a constant number of operations. \\
-Step 2-3 takes $O(n)$ time since we are going in lexicographic order of the polygon. \\
-Step 4 takes $O(n)$ time since we are going through each line segment in the polygon at most twice with that step. \\
-The total running time is thus $O(n)$
+There are $n$ iterations of the loop and each has a constant number of operations unless a reordering needs to be done. \\
+Segments will not be deleted more than once so the total number of times something is deleted will not be more than n. \\
+The total running time is thus $O(n)$. 
 
 
 
@@ -135,23 +132,23 @@ The total running time is thus O($n^2$) which is an improvement over the last al
 
 \section*{Problem 15.4}
 
-What is the maximal number of shortest paths connecting two ﬁxed
-points among a set of n triangles in the plane?\\
-\\
-The visibility graph will have $V = (3n+2)$.\\
-For each vertex $v$ we have $|v| \leq 3n + 2$ for the number of vertices it is connected to. \\
-The max number of paths is the max number of sequences of such vertices. \\
-We need to start with $s$ and end with $t$ but the vertices in the middle do not matter. \\
-We end up with $(3n)!$ paths possible. \\
-\\
-We can tighten this when we consider that we can only be moving forward toward our point. \\
-Thus any path can only go along at most 2 edges per triangle. \\
-If we have to go through all n triangles and have to use two edges, then there are $2^n$ shortest paths. \\
-That ends up being an upper bound. \\
-\\
-If the triangles are not in the way at all, then the lower bound number of paths is 1. \\
-\\
+We can construct an instance where we have $2^{n/2}$ shortest paths, giving us a lower bound on the maximal number of shortest paths. \\
+1. Put equal sized triangles between two points $s$ and $t$. \\
+2. Between those triangles put very large triangles. \\
+3. This will cause the shortest paths around the triangles to meet. \\
+4. Thus there will be $\frac{n}{2}$ instances where the number of shortest paths doubles, giving us $2^{n/2}$. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{shortestPaths_diagram.jpg}
+\caption{Diagram of the shortest paths in the example above}
+\end{figure}
+
+There are $3n$ vertices total and each vertex is either in the shortest path or not in the shortest path, thus an upper bound on the total number of possible shortest paths is $2^{3n}$. \\
+\\
+To conclude:\\
+Maximal Number of Shortest Paths Lower Bound: $2^{n/2}$\\
+Maximal Number of Shortest Paths Upper Bound: $2^{3n}$ \\
 
 
 \end{document}
