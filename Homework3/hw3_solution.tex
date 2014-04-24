@@ -40,35 +40,29 @@
 
 \section*{Problem 3.11}
 
-Give an efﬁcient algorithm to determine whether a polygon P with n
-vertices is monotone with respect to some line, not necessarily a horizontal
-or vertical one.\\
-\\
-For this algorithm, we will use a version of the plane sweep algorithm. We will sweep a horizontal line at each vertex and if the intersection is more than just two points, a line segment, or empty, then it is not monotone. \\
+For this problem, it could end up not being monotone because of a concave vertex in the polygon that would cause there to be more than two intersection points in a given direction. We will thus go through each of the concave vertices and determine which directions that the polygon is not monotone in given that vertex. This will give us an interval of angles. Once we get the union of the intervals, we will see if that covers $[0,\pi]$ and if not, then the polygon is monotone for some direction. \\
 \\
 Here is the algorithm:\\
-1. Sort the vertices by y-coordinate\\
-2. Make an interval tree data structure for the $y_{min}$ and $y_{max}$ coordinates of each of the segments. \\
-\begin{verbatim}
-http://en.wikipedia.org/wiki/Interval_tree#Centered_interval_tree
-\end{verbatim}
-3. For each vertex v, do the following:\\
-- Sweep a horizontal line at its y-coordinate\\
-- If the number of other segments or points with that same y-coordinate is more than 1\\
-or there is at least one other intersection but v is part of a horizontal segment, then\\
-declare that P is not monotone and exit.\\
-(TODO: Detail the data structure to be used here)\\
-4. If P has not been declared non-monotone, then P is monotone\\
-\\
-Correctness:\\
-All the parts where the it will not be polygon will be at event points, which are the vertices. (TODO: Prove this)\\
-\\
-Running time: \\
-Step 1 will take O(n log n) time. \\
-Constructing an interval tree for Step 2 is O(n log n) time. \\
-There are n vertices to test in the worst case. \\
-For each vertex, the query will take O($log n + 2$) time since we are requesting 2 results. \\
-Thus the total running time ends up being O(n log n)\\
+1. Initialize R to be empty. \\
+2. For each vertex that is concave:\\
+- Call the line segments through them $l$ and $l'$ \\
+- Draw the lines perpendicular to $l$ and $l'$ and call them $L$ and $L'$\\
+- Find the angles of $L$ and $L'$ with the x-axis and call them $\theta$ and $\theta'$. \\
+- Find the min and max of $\theta$ and $\theta'$ and call them $\theta_1$ and $\theta_2$. \\
+- Add $[\theta_1,\theta_2]$ to R.\\
+3. Take the union of all the intervals in R. \\
+4. If $[0,\pi] \subseteq R$, then the polygon is not monotone. \\
+Otherwise it is monotone. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{monotone_diagram.jpg}
+\caption{The non monotone directions with a concavity}
+\end{figure}
+
+Running time:\\
+For each vertex, we do a constant number of operations. \\
+Thus we have a total running time of $O(n)$
 
 \newpage
 
