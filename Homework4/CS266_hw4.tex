@@ -121,7 +121,45 @@ TODO: Proof with points and query rectangle
 
 \section*{Problem 5.10}
  
+In some applications one is interested only in the number of points that
+lie in a range rather than in reporting all of them. Such queries are often
+referred to as range counting queries. In this case one would like to avoid
+having an additive term of O(k) in the query time.\\
+a. Describe how a 1-dimensional range tree can be adapted such that a
+range counting query can be performed in O(logn) time. Prove the
+query time bound.\\
+b. Using the solution to the 1-dimensional problem, describe how ddimensional
+range counting queries can be answered in O(logd n)
+time. Prove the query time.\\
+c.* Describe how fractional cascading can be used to improve the running
+time with a factor of O(logn) for 2- and higher-dimensional range
+counting queries.\\
 
+\subsection*{Part A}
+
+Assuming that in our range tree, each node says the total number of subnodes, it is easy to have an O(log n) algorithm for range counting. \\
+\\
+In the 1-d case, we just have a binary search tree, so we just have to do the following:\\
+1. Transverse the Binary Search Tree\\
+2. After you get to a split vertex:\\
+- Traverse the left side and every time you have to make a left turn, add the right node's subnode count to the range count. \\
+- Traverse the right side and every time you have to make a right turn, add the left node's subnode count to the range count. \\
+\\
+Running time:\\
+There is a constant number of operations per level and there are $log_2(n)$ levels, thus the total running time is $O(log n)$. \\
+\\
+
+\subsection*{Part B}
+
+You make sure to have binary search trees that report how many nodes are in subtrees. \\
+\\
+For the d-dimensional case, once you get to a split vertex as well as other vertices, you report the number of matching y-coordinates by going through the linked binary search trees. For the next dimension, you do the same thing and so on. \\
+\\
+Running time:\\
+In the first dimension, there are $log_2(n)$ levels. For each level, we will do at most $log_2(n)$ operations to get the number in the next level. This means that for $d$ dimensions, we will end up with $O(log^d(n))$ operations. 
+\\
+
+\subsection*{Part C}
 
 
 %\begin{figure}[H]
