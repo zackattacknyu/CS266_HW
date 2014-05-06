@@ -117,7 +117,10 @@ It then happens that $a > b^k$, thus our solution is $Q(n) = \Theta( n^{log_b(a)
 As it happens $log_4(2)=\frac{1}{2}$, thus we have $Q(n) = \Theta(n^{\frac{1}{2}})$\\
 This proves that $Q(n)=O(\sqrt{n})$ and $Q(n)=\Omega(\sqrt{n})$.\\
 \\
-TODO: Proof with points and query rectangle
+Take 7 points lined up in a row. \\
+The first split will get a node followed by 3 points in each subtree. \\
+The next split will get a node followed by two leaves. \\
+There are 2 splits and a constant number of operations per split, so it is lower bounded by 2, and $floor(\sqrt{7}) = 2$
 
 \section*{Problem 5.10}
  
