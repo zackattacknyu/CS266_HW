@@ -109,7 +109,8 @@ Construct a binary search tree of the endpoints. Binary search trees take $O(n)$
 Construction algorithm:\\
 1. Make a BST of endpoints. \\
 2. Sort the list of endpoints. \\
-3. For each endpoint in ascending order:\\
+3. Initialize count to zero. \\
+4. For each endpoint in ascending order:\\
 If left endpoint: \\
 - Add one to count\\
 If right endpoint: \\
@@ -131,7 +132,10 @@ quadtree, we could weaken the balance condition by allowing adjacent
 squares to differ by a factor of four in size. Can you still complete such
 a weakly balanced quadtree subdivision to a conforming mesh such that
 all angles are between 45◦ and 90◦ by using only O(1) triangles per
-square?
+square?\\
+\\
+Now, we cannot do this, because we might end up with obtuse angles if we use the weaker condition. \\
+TODO: Insert example, read more page 315 of book
 
 \section*{Problem 14.12}
 
@@ -141,7 +145,56 @@ exercise). Both images have size 2k ×2k, and contain only two intensities,
 that is, give algorithms to compute a quadtree for I1 ∨ I2 and I1 ∧ I2.
 (Here I1 ∨I2 is the 2k ×2k image where pixel (i, j) has intensity 1 if and
 only if (i, j) has intensity 1 in image I1 or in image I2. The image I1 ∧I2
-is defined similarly.)
+is defined similarly.)\\
+\\
+For this algorithm, a vertex v in the quad tree will have this data:\\
+- subtree(i) will be pointers to subvertices if this square is split up. i = 1,2,3,4\\
+- value will be intensity value if this vertex is a leaf. \\
+\\
+$J_1$, $J_2$ will denote the quad trees for the images and will have the root field as pointers to the root vertex \\
+\\
+Here is the algorithm:\\
+Run GetANDQuadTree($J_1$,$J_2$) and GetORQuadTree($J_1$,$J_2$) to get the root vertices with all their subtrees\\
+
+\begin{verbatim}
+
+GetANDQuadTree(I,J):
+-     Initialize vertex v with no subtrees or values
+-     if both I,J have subtrees:
+-          for each subtree i from 1 to 4:
+-               v.subtree(i) = GetANDQuadTree(I.subtree(i),J.subtree(i))
+-          return v
+-     else if both I,J are leaves:
+-          v.value = I.value and J.value
+-     else:
+-          let K_1 be the one that is a leaf
+-          let K_2 be the one that ha a subtree
+-          if K_1.value is 0:
+-               v.value = 0
+-               return v
+-          else:
+-               v.subtree(i)=K_2.subtree(i) for i from 1 to 4
+-               return v
+
+GetORQuadTree(I,J):
+-     Initialize vertex v with no subtrees or values
+-     if both I,J have subtrees:
+-          for each subtree i from 1 to 4:
+-               v.subtree(i) = GetORQuadTree(I.subtree(i),J.subtree(i))
+-          return v
+-     else if both I,J are leaves:
+-          v.value = I.value and J.value
+-     else:
+-          let K_1 be the one that is a leaf
+-          let K_2 be the one that ha a subtree
+-          if K_1.value is 1:
+-               v.value = 1
+-               return v
+-          else:
+-               v.subtree(i)=K_2.subtree(i) for i from 1 to 4
+-               return v
+
+\end{verbatim}
 
 
 %\begin{figure}[H]
