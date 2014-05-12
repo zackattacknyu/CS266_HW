@@ -57,6 +57,42 @@ b. Prove that the data structure correctly solves the queries.
 c. What are the bounds for preprocessing time, storage, and query time
 of this structure? Prove your answers.
 
+\subsection*{Part A}
+
+Here is the algorithm:\\
+Traverse binary search tree for y-coordinate until you hit a split vertex\\
+Traverse right subtree:\\
+- Every time you make a right turn, call the left node n and do Recurse(n)\\
+Traverse left subtree:\\
+- Every time you make a left turn, call the right node n and do Recurse(n)\\
+\\
+Recurse(n):\\
+- Report intervals in the binary search tree for n that lie in our point.\\
+\\
+
+\subsection*{Part B}
+
+We have a binary search tree that will correctly get us the intervals with the correct y-coordinate. We then have an interval tree on our x-coordinates that will get us the matching x's. Thus we will get segments that correctly fit our requirements. \\
+
+\subsection*{Part C}
+
+Preprocessing: \\
+The binary search tree can be constructed in $O(n \cdot logn)$\\
+Each segment tree can be constructed in $O(n \cdot logn)$ time. \\
+Total thus is $O(n^2 log^2(n))$ time. \\
+\\
+Query: \\
+Traversing the first one will take O(log n) operations. \\
+Traversing the query time will be done up to log(n) times.\\
+For each time, we have a segment tree, so the count will take $log n$ times to obtain. \\
+We thus have a query time of $O(log^2(n))$\\
+\\
+Storage:\\
+A binary search tree on the y-coordinate can be stored in $O(n)$ space. \\
+The segment trees are each $O(n \cdot log(n))$ space. \\
+Thus the total space is $O(n^2 \cdot log(n))$
+
+
 \section*{Problem 10.6c}
 
 Let I be a set of intervals on the real line. We want to be able to count the
@@ -67,7 +103,24 @@ the query point.\\
 Describe a data structure for this problem based on a simple binary
 search tree. Your structure should have O(n) storage and O(logn)
 query time. (Hence, segment trees are actually not needed to solve
-this problem efficiently.)
+this problem efficiently.)\\
+\\
+Construct a binary search tree of the endpoints. Binary search trees take $O(n)$ storage. For each leaf in the Binary Search Tree, store the number of overlapping intervals. \\
+Construction algorithm:\\
+1. Make a BST of endpoints. \\
+2. Sort the list of endpoints. \\
+3. For each endpoint in ascending order:\\
+If left endpoint: \\
+- Add one to count\\
+If right endpoint: \\
+- Subtract one from count\\
+Put count into endpoint node in Binary Search Tree. \\
+\\
+Query algorithm to get point q:\\
+1. Traverse binary search tree until you find the greatest endpoint that is less than q\\
+2. Report its count. \\
+\\
+Construction will be $O(n \cdot logn)$, query will be $O(logn)$ since it is still a binary search tree. 
 
 \section*{Problem 14.6}
 
