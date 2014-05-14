@@ -92,37 +92,33 @@ A binary search tree on the y-coordinate can be stored in $O(n)$ space. \\
 The segment trees are each $O(n \cdot log(n))$ space. \\
 Thus the total space is $O(n^2 \cdot log(n))$
 
+\newpage
 
 \section*{Problem 10.6c}
-
-Let I be a set of intervals on the real line. We want to be able to count the
-number of intervals containing a query point in O(logn) time. Thus, the
-query time must be independent of the number of segments containing
-the query point.\\
+Construct a binary search tree of the endpoints. \\
+For each leaf in the Binary Search Tree, store the number of overlapping intervals. \\
 \\
-Describe a data structure for this problem based on a simple binary
-search tree. Your structure should have O(n) storage and O(logn)
-query time. (Hence, segment trees are actually not needed to solve
-this problem efficiently.)\\
-\\
-Construct a binary search tree of the endpoints. Binary search trees take $O(n)$ storage. For each leaf in the Binary Search Tree, store the number of overlapping intervals. \\
-Construction algorithm:\\
-1. Make a BST of endpoints. \\
-2. Sort the list of endpoints. \\
-3. Initialize count to zero. \\
-4. For each endpoint in ascending order:\\
-If left endpoint: \\
-- Add one to count\\
-If right endpoint: \\
-- Subtract one from count\\
-Put count into endpoint node in Binary Search Tree. \\
-\\
-Query algorithm to get point q:\\
+Construction algorithm:
+\begin{verbatim}
+-Make a Binary Search Tree of Endpoints
+-Sort the list of endpoints
+-Initialize currentCount to zero
+-For each endpoint in ascending order:
+-     If left endpoint:
+-          Add one to currentCount
+-     If right endpoint:
+-          Subtract one from currentCount
+-     Put currentCount into endpoint node in Binary Search Tree
+\end{verbatim}
+Query algorithm to get number of intervals at point q:\\
 1. Traverse binary search tree until you find the greatest endpoint that is less than q\\
 2. Report its count. \\
 \\
-Construction will be $O(n \cdot logn)$, query will be $O(logn)$ since it is still a binary search tree. 
-
+Analysis:\\
+Construction will be $O(n \cdot logn)$ \\
+Query will be $O(logn)$ since it is still a binary search tree \\
+Storage will be $O(n)$ since it is just a binary search tree with an added data field in the nodes
+\newpage
 \section*{Problem 14.6}
 
 In this chapter we called a quadtree balanced if two adjacent squares of
@@ -137,27 +133,20 @@ square?\\
 Now, we cannot do this, because we might end up with obtuse angles if we use the weaker condition. \\
 TODO: Insert example, read more page 315 of book
 
+\newpage
+
 \section*{Problem 14.12}
 
-Suppose we have quadtrees on pixel images I1 and I2 (see the previous
-exercise). Both images have size 2k ×2k, and contain only two intensities,
-0 and 1. Give algorithms for Boolean operations on these images,
-that is, give algorithms to compute a quadtree for I1 ∨ I2 and I1 ∧ I2.
-(Here I1 ∨I2 is the 2k ×2k image where pixel (i, j) has intensity 1 if and
-only if (i, j) has intensity 1 in image I1 or in image I2. The image I1 ∧I2
-is defined similarly.)\\
-\\
 For this algorithm, a vertex v in the quad tree will have this data:\\
-- subtree(i) will be pointers to subvertices if this square is split up. i = 1,2,3,4\\
-- value will be intensity value if this vertex is a leaf. \\
+- $subtree(i)$ for i=1,2,3,4 will be pointers to subvertices if this square is split up\\
+- $value$ will be intensity value if this vertex is a leaf. \\
+$J_1$, $J_2$ will denote the quad trees for the images and will point to the root vertex \\
 \\
-$J_1$, $J_2$ will denote the quad trees for the images and will have the root field as pointers to the root vertex \\
+The idea behind this algorithm is that we can traverse the two quad trees concurrently to compute the AND and OR quad trees and potentially take shortcuts. If we are computing the AND tree and we encounter a 0, then we already know that the entire square in the result image will be 0. Similarly, if we are computing the OR tree and we encounter a 1, then we already know that the entire square in the result image will be 1. If we are computing the AND tree and encounter a 1, then the result will be entirely dependent on the other tree. Similarly, if we are computing the OR tree and encounter a zero, then the result is entirely dependent on the other tree.\\
 \\
-Here is the algorithm:\\
-Run GetANDQuadTree($J_1$,$J_2$) and GetORQuadTree($J_1$,$J_2$) to get the root vertices with all their subtrees\\
-
+Here are the algorithms in detail:\\
+Run GetANDQuadTree($J_1$,$J_2$) and GetORQuadTree($J_1$,$J_2$)
 \begin{verbatim}
-
 GetANDQuadTree(I,J):
 -     Initialize vertex v with no subtrees or values
 -     if both I,J have subtrees:
@@ -165,17 +154,20 @@ GetANDQuadTree(I,J):
 -               v.subtree(i) = GetANDQuadTree(I.subtree(i),J.subtree(i))
 -          return v
 -     else if both I,J are leaves:
--          v.value = I.value and J.value
+-          v.value = (I.value and J.value)
 -     else:
 -          let K_1 be the one that is a leaf
--          let K_2 be the one that ha a subtree
+-          let K_2 be the one that has a subtree
 -          if K_1.value is 0:
 -               v.value = 0
 -               return v
 -          else:
--               v.subtree(i)=K_2.subtree(i) for i from 1 to 4
+-               for each subtree i from 1 to 4:
+-                    v.subtree(i)=K_2.subtree(i)
 -               return v
-
+\end{verbatim}
+\newpage
+\begin{verbatim}
 GetORQuadTree(I,J):
 -     Initialize vertex v with no subtrees or values
 -     if both I,J have subtrees:
@@ -183,15 +175,16 @@ GetORQuadTree(I,J):
 -               v.subtree(i) = GetORQuadTree(I.subtree(i),J.subtree(i))
 -          return v
 -     else if both I,J are leaves:
--          v.value = I.value and J.value
+-          v.value = I.value or J.value
 -     else:
 -          let K_1 be the one that is a leaf
--          let K_2 be the one that ha a subtree
+-          let K_2 be the one that has a subtree
 -          if K_1.value is 1:
 -               v.value = 1
 -               return v
 -          else:
--               v.subtree(i)=K_2.subtree(i) for i from 1 to 4
+-               for each subtree i from 1 to 4
+-                    v.subtree(i)=K_2.subtree(i)
 -               return v
 
 \end{verbatim}
