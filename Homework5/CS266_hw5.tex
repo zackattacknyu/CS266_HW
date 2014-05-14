@@ -130,9 +130,27 @@ a weakly balanced quadtree subdivision to a conforming mesh such that
 all angles are between 45◦ and 90◦ by using only O(1) triangles per
 square?\\
 \\
-Now, we cannot do this, because we might end up with obtuse angles if we use the weaker condition. \\
-TODO: Insert example, read more page 315 of book
-
+There is no way to do a triangulation that will fit that criteria. In the worst case, we will have a square and it will be next to a square that is one fourth its size and the vertices need to be triangulated. We will thus have a point P that is one fourth the way along one of the sides of the triangle. \\
+\\
+If P is connected to the center point, then an obtuse angle ends up being formed with the side. Here is an illustration of how it happens:
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw5prob3_diagram1.png}
+\caption{Proposed Triangulation. Angle A will be obtuse, violating requirements}
+\end{figure}
+If we have an interior point that is not the center, then its triangulation has an obtuse angle, violating the constraints. This is because it has to be connected to the 4 corner points, meaning there are 4 triangles whose angle sum needs to add to 360. Since they are not all 90 degrees if it is not the center point, at least one of them must be greater than that.
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw5prob3_diagram2.png}
+\caption{Proposed Triangulation. At least one interior angle will be obtuse}
+\end{figure} 
+Finally, we cannot connect P to any of the vertices on its own side since it is already connected there. Therefore, the last remaining vertices it might be possible to connect it to are the vertices on the opposite side. Lets call them $R$ and $S$ where $R$ is the one that lies closer to $P$. If we connect $P$ to $S$ or $P$ to $R$ then in both cases we end up with right triangles that violate our constraints.
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw5prob3_diagram3.png}
+\caption{Proposed Triangulation. The triangles formed will violate the constraints}
+\end{figure}  
+Since we have run out of places to connect P to, it is not possible to do the triangulation.
 \newpage
 
 \section*{Problem 14.12}
