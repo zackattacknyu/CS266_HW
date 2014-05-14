@@ -40,23 +40,6 @@
 
 \section*{Problem 10.1}
 
-In Section 10.1 we solved the problem of finding all horizontal line
-segments in a set that intersect a vertical segment. For this we used an
-interval tree with priority search trees as associated structures. There
-is also an alternative approach. We can use a 1-dimensional range tree
-on the y-coordinate of the segments to determine those segments whose
-y-coordinate lies in the y-range of the query segment. The resulting
-segments cannot lie above or below the query segment, but they may
-lie completely to the left or to the right of it. We get those segments
-in O(logn) canonical subsets. For each of these subsets we use as an
-associated structure an interval tree on the x-coordinates to find the
-segments that actually intersect the query segment.
-q
-a. Give the algorithm in pseudocode.
-b. Prove that the data structure correctly solves the queries.
-c. What are the bounds for preprocessing time, storage, and query time
-of this structure? Prove your answers.
-
 \subsection*{Part A}
 
 Here is the algorithm:\\
@@ -68,29 +51,35 @@ Traverse left subtree:\\
 \\
 Recurse(n):\\
 - Report intervals in the binary search tree for n that lie in our point.\\
-\\
 
 \subsection*{Part B}
 
-We have a binary search tree that will correctly get us the intervals with the correct y-coordinate. We then have an interval tree on our x-coordinates that will get us the matching x's. Thus we will get segments that correctly fit our requirements. \\
+We have a binary search tree for the y-coordinate of the points, thus we will get all the segments whose y-coordinates are in the y-coordinate range of our vertical segment and only those segments where the y-coordinates match. Once we establish the y-range, we have interval trees for all the x-coordinates of the segments. Querying the interval tree will ensure we get all the segments where the x-coordinate matches and only those segments. Since the segments will match both the x and y coordinates and only those matching segments are retrieved, the query will be correct. 
+
+\newpage
 
 \subsection*{Part C}
 
 Preprocessing: \\
-The binary search tree can be constructed in $O(n \cdot logn)$\\
-Each segment tree can be constructed in $O(n \cdot logn)$ time. \\
-Total thus is $O(n^2 log^2(n))$ time. \\
+The binary search tree can be constructed in $O(n \cdot log(n))$\\
+Each segment tree can be constructed in $O(m \cdot log(m))$ time where $m$ is the number of intervals. \\
+At each level $k$ of the binary search tree, there are at most $2^k$ nodes and each node has $\frac{n}{2^k}$ intervals, thus the run time per level is $2^k(\frac{n}{2^k} log(\frac{n}{2^k}))$\\
+Thus each level takes $O(n \cdot log(n))$ time to compute and there are $log(n)$ levels. \\
+The running time is thus $n \cdot log(n) + n \cdot log^2(n)$\\
+In summary, it take $O(n \cdot log^2(n))$ time for preprocessing  \\
 \\
 Query: \\
-Traversing the first one will take O(log n) operations. \\
-Traversing the query time will be done up to log(n) times.\\
-For each time, we have a segment tree, so the count will take $log n$ times to obtain. \\
+It may traverse up to $log(n)$ nodes in the range tree. \\
+For each node, traversing the associated interval tree will take $O(log(n))$ time. \\
 We thus have a query time of $O(log^2(n))$\\
 \\
 Storage:\\
 A binary search tree on the y-coordinate can be stored in $O(n)$ space. \\
-The segment trees are each $O(n \cdot log(n))$ space. \\
-Thus the total space is $O(n^2 \cdot log(n))$
+An interval tree can be stored in $O(m)$ space where $m$ is number of intervals. \\
+At each level $k$ of the binary search tree, there are at most $2^k$ nodes and each node has $\frac{n}{2^k}$ intervals, thus the storage per level is $2^k(\frac{n}{2^k})=n$\\
+Thus each level uses $O(n)$ storage and there are $log(n)$ levels. \\
+The total storage is thus $n + n \cdot log(n)$\\
+In summary, $O(n \cdot log(n))$ storage is required
 
 \newpage
 
