@@ -52,7 +52,15 @@ There are n segments and thus 2n endpoints. Considering that there are 3 trapezo
 
 \section*{Problem 6.15}
 
- 
+ Although we have started with the point location problem on the surface
+of the earth, we have only treated planar point location. But the earth is
+a globe. How would you define a spherical subdivision—a subdivision
+of the surface of a sphere? Give a point location structure for such a
+subdivision.\\
+\\
+Divide the sphere into cross-sections by x-coordinate. The top and bottom ones would be degenerate ones. You then divide up the cross-sections. \\
+\\
+Identically, each point on the surface of the sphere can be described by two angles $(\theta,\phi)$. You can take these coordinates for each point and put them into a 2-D space and then do the point location map. Vertical segments will correspond to the cross sections described above. 
 %\begin{figure}[H]
 %\centering
 %\includegraphics[height=4in]{prob1plot.jpg}
