@@ -1,0 +1,71 @@
+\documentclass[11pt,psfig]{article}
+\usepackage{epsfig}
+\usepackage{times}
+\usepackage{amssymb}
+\usepackage{float}
+
+\newcount\refno\refno=1
+\def\ref{\the\refno \global\advance\refno by 1}
+\def\ux{\underline{x}}
+\def\uw{\underline{w}}
+\def\bw{\underline{w}}
+\def\ut{\underline{\theta}}
+\def\umu{\underline{\mu}} 
+\def\bmu{\underline{\mu}} 
+\def\be{p_e^*}
+\newcount\eqnumber\eqnumber=1
+\def\eq{\the \eqnumber \global\advance\eqnumber by 1}
+\def\eqs{\eq}
+\def\eqn{\eqno(\eq)}
+
+ \pagestyle{empty}
+\def\baselinestretch{1.1}
+\topmargin1in \headsep0.3in
+\topmargin0in \oddsidemargin0in \textwidth6.5in \textheight8.5in
+\begin{document}
+\setlength{\parskip}{1.2ex plus0.3ex minus 0.3ex}
+
+
+\thispagestyle{empty} \pagestyle{myheadings} \markright{G}
+
+
+
+\title{CS 266 Homework 6}
+\author{Zachary DeStefano, PhD Student, 15247592}
+\date{Due Date: May 22}
+
+\maketitle
+
+\vfill\eject
+
+\section*{Problem 6.13}
+
+As a vertical line sweeps across, it will be making a trapezoid. \\
+At a left endpoint, there are three trapezoids:\\
+1. One already existing to the right\\
+2. One being made above existing segment\\
+3. One being made below existing segment\\
+\\
+There are n segments and thus 2n endpoints. Considering that there are 3 trapezoids at each endpoint, this makes 6n trapezoids. However, we are double counting each trapezoid, making it 3n trapezoids. We are not however double counting in the case of the first endpoint that is considered because the trapezoid before it was not created by another endpoint, thus that adds 1 trapezoid. This means that there are at most $3n+1$ trapezoids for n line segments.
+
+\newpage
+
+\section*{Problem 6.15}
+
+ 
+%\begin{figure}[H]
+%\centering
+%\includegraphics[height=4in]{prob1plot.jpg}
+%\caption{Probability of Class Labels with decision boundaries marked}
+%\end{figure}
+
+
+\end{document}
+
+
+
+
+
+
+
+
