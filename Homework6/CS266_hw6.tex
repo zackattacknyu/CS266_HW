@@ -42,11 +42,16 @@
 
 As a vertical line sweeps across, it will be making a trapezoid. \\
 At a left endpoint, there are three trapezoids:\\
-1. One already existing to the right\\
-2. One being made above existing segment\\
-3. One being made below existing segment\\
+1. One already existing to the left of the new segment\\
+2. One being made above existing segment to the right\\
+3. One being made below existing segment to the right\\
 \\
-There are n segments and thus 2n endpoints. Considering that there are 3 trapezoids at each endpoint, this makes 6n trapezoids. However, we are double counting each trapezoid, making it 3n trapezoids. We are not however double counting in the case of the first endpoint that is considered because the trapezoid before it was not created by another endpoint, thus that adds 1 trapezoid. This means that there are at most $3n+1$ trapezoids for n line segments.
+At a right endpoint, there are three trapezoids:\\
+1. One already existing to the left above the old segment\\
+2. One alright existing to the left below the old segment\\
+3. One being made to the right of the old segment\\
+\\
+There are n segments that have left and right endpoints and at a left endpoint, there are 2 being made while at the right endpoint, there is one being made, thus for each segment, 3 trapezoids are made. With the very first endpoint though, 4 trapezoids are made because there is not one already existing to the left and it has to be made. Thus there are at most $3n+1$ trapezoids. 
 
 \newpage
 
@@ -61,6 +66,14 @@ subdivision.\\
 Divide the sphere into cross-sections by x-coordinate. The top and bottom ones would be degenerate ones. You then divide up the cross-sections. \\
 \\
 Identically, each point on the surface of the sphere can be described by two angles $(\theta,\phi)$. You can take these coordinates for each point and put them into a 2-D space and then do the point location map. Vertical segments will correspond to the cross sections described above. 
+
+\newpage
+
+\section*{Problem 12.4}
+
+
+\section8{Problem 12.10}
+
 %\begin{figure}[H]
 %\centering
 %\includegraphics[height=4in]{prob1plot.jpg}
