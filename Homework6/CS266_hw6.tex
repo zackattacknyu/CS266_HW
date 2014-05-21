@@ -53,8 +53,6 @@ At a right endpoint, there are three trapezoids:\\
 \\
 There are n segments that have left and right endpoints and at a left endpoint, there are 2 being made while at the right endpoint, there is one being made, thus for each segment, 3 trapezoids are made. With the very first endpoint though, 4 trapezoids are made because there is not one already existing to the left and it has to be made. Thus there are at most $3n+1$ trapezoids. 
 
-\newpage
-
 \section*{Problem 6.15}
 
  Although we have started with the point location problem on the surface
@@ -71,8 +69,30 @@ Identically, each point on the surface of the sphere can be described by two ang
 
 \section*{Problem 12.4}
 
+If we have a set of segments such that each line will split at least one other segment, then the auto-partitions will have more nodes in the trees than the least possible partition. \\
+\\
+Here is an example of 3 line segments to partition:
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw6prob3diagram1.jpg}
+\caption{Set of Line Segments to Partition}
+\end{figure}
 
-\section8{Problem 12.10}
+Here is a binary space partition that uses only 3 segments:
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw6prob3diagram2.jpg}
+\caption{Set of Line Segments Partitioned using the green lines}
+\end{figure}
+
+Each auto-partition will split up another line, thus at least 4 nodes are needed for an auto-partition, as can be seen with this example one
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{hw6prob3diagram3.jpg}
+\caption{Set of Line Segments with auto-partitioning lines in green}
+\end{figure}
+
+\section*{Problem 12.10}
 
 %\begin{figure}[H]
 %\centering
