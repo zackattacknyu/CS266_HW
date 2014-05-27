@@ -56,10 +56,20 @@ plane is a tree of minimum total edge length connecting all the points.
 EMST’s are interesting in applications where we want to connect sites
 in a planar environment by communication lines (local area networks),
 roads, railroads, or the like.\\
-a. Prove that the set of edges of a Delaunay triangulation of P contains
+
+\subsection*{Part a}
+Prove that the set of edges of a Delaunay triangulation of P contains
 an EMST for P.\\
-b. Use this result to give an O(nlogn) algorithm to compute an EMST
+\\
+Make the Euclidean tree. \\
+Apply Kruskal's to get an MST. \\
+Because the Delaunay Triangulation gets all the sets of points which are closest together, all the edges for them will be included. 
+
+\subsection*{Part b}
+Use this result to give an O(nlogn) algorithm to compute an EMST
 for P.\\
+Compute the Delaunay Triangulation. \\
+Apply Kruskal's algorithm to the graph derived from the triangulation to get the EMST\\
 
 \section*{Problem 9.17}
 
