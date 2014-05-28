@@ -40,14 +40,26 @@
 
 \section*{Problem 7.7}
 Do the breakpoints of the beach line always move downwards when the
-sweep line moves downwards? Prove this or give a counterexample.
+sweep line moves downwards? Prove this or give a counterexample.\\
+\\
+This is true. If we look at the existing breakpoints that are above the sweep line, they are the intersections of parabolas that represent the region where it's closer to the points than to the sweep line. If you move the sweep line down, then no points will get deleted from this region, but points will be added to the bottom of it, thus the parabolas move downward and their intersections would thus have to move down since the parabolas move uniformly. 
 
 \section*{Problem 7.11}
 
 Let P be a set of n points in the plane. Give an O(nlogn) time algorithm
 to find for each point p in P another point in P that is closest to it.\\
 \\
-Compute the Voronoi Diagram and for the cell of p, calculate the nearest edge and whichever cell that corresponds to is the closest point. 
+Here is the algorithm:\\
+1. Compute the Voronoi Diagram\\
+2. For the cell of p:\\
+Find perpendicular distance to each edge of p\\
+Figure out which is closer and the corresponding point is the closest one to p\\
+\\
+Running time:\\
+There are n cells\\
+There are $O(n)$ edges total since the storage required is $O(n)$ thus the checking step takes a total of $O(n)$ time. \\
+Computing the Voronoi Diagram will take $O(n \cdot log(n))$ time. \\
+Total running time is thus $O(n \cdot log(n))$
 
 \section*{Problem 9.11}
 
@@ -76,7 +88,9 @@ Apply Kruskal's algorithm to the graph derived from the triangulation to get the
 The weight of a triangulation is the sum of the lengths of all edges of
 the triangulation. A minimum weight triangulation is a triangulation
 whose weight is minimal. Disprove the conjecture that the Delaunay
-triangulation is a minimum weight triangulation.
+triangulation is a minimum weight triangulation.\\
+\\
+If we take a quadrilateril that points inward. 
 
 %\begin{figure}[H]
 %\centering
