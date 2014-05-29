@@ -39,16 +39,16 @@
 \vfill\eject
 
 \section*{Problem 7.7}
-Do the breakpoints of the beach line always move downwards when the
-sweep line moves downwards? Prove this or give a counterexample.\\
-\\
-This is true. If we look at the existing breakpoints that are above the sweep line, they are the intersections of parabolas that represent the region where it's closer to the points than to the sweep line. If you move the sweep line down, then no points will get deleted from this region, but points will be added to the bottom of it, thus the parabolas move downward and their intersections would thus have to move down since the parabolas move uniformly. 
+This is false. There are cases we can construct where the beach line breakpoints would move upward. Let's take the example of two points that are on a diagonal line and we construct the Voronoi diagram for just those two points. When the second point is reached, there will be two breakpoints from the two intersections of the parabolas and one of the breakpoints will move upward while the other moves downward.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=2.5in]{hw7prob1diagram.jpg}
+\caption{Beach Line example. The top breakpoint will move up while the bottom one will move down.}
+\end{figure}
 
 \section*{Problem 7.11}
 
-Let P be a set of n points in the plane. Give an O(nlogn) time algorithm
-to find for each point p in P another point in P that is closest to it.\\
-\\
 Here is the algorithm:\\
 1. Compute the Voronoi Diagram\\
 2. For the cell of p:\\
@@ -57,40 +57,45 @@ Figure out which is closer and the corresponding point is the closest one to p\\
 \\
 Running time:\\
 There are n cells\\
-There are $O(n)$ edges total since the storage required is $O(n)$ thus the checking step takes a total of $O(n)$ time. \\
+There are $O(n)$ edges total since the storage required is $O(n)$\\
+thus the checking step takes a total of $O(n)$ time. \\
 Computing the Voronoi Diagram will take $O(n \cdot log(n))$ time. \\
 Total running time is thus $O(n \cdot log(n))$
 
 \section*{Problem 9.11}
 
-A Euclidean minimum spanning tree (EMST) of a set P of points in the
-plane is a tree of minimum total edge length connecting all the points.
-EMST’s are interesting in applications where we want to connect sites
-in a planar environment by communication lines (local area networks),
-roads, railroads, or the like.\\
-
 \subsection*{Part a}
-Prove that the set of edges of a Delaunay triangulation of P contains
-an EMST for P.\\
-\\
-Make the Euclidean tree. \\
-Apply Kruskal's to get an MST. \\
-Because the Delaunay Triangulation gets all the sets of points which are closest together, all the edges for them will be included. 
+Suppose there are two points $p$ and $q$ whose edge is in the EMST but whose edge is not in the Delaunay Triangulation. Since it is not in the Delaunay Tringulation, there is at least one point $r$ between $p$ and $q$\\
+Now, take out $r$ and separate the graph into two sets of vertices, one with $p$ and one with $q$. \\
+Compute the EMST of the two sets. We now have to add back in $r$ and join the sets via edges. \\
+The logical choice would be $pr$,$rq$ however we also said that there was a line between $p$ and $q$ in the EMST, thus those are connected. \\
+WLOG assume $r$ is closer to $p$ than $q$, then the next edge would be $pr$. \\
+We are thus forced to have our edges be $pq$ and $pr$\\
+By what was said above, we know that $pq$ has greater weight that $rq$. \\
+Thus the EMST we want to construct will have less weight than the EMST we would be forced to construct with the initial condition. 
+We thus did not have an EMST to begin with, a contradiction.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=2in]{hw7prob2diagram.jpg}
+\caption{The Points $p,q,r$. Green are the good edges. Red that are edges from the faulty scenario}
+\end{figure} 
 
 \subsection*{Part b}
-Use this result to give an O(nlogn) algorithm to compute an EMST
-for P.\\
-Compute the Delaunay Triangulation. \\
-Apply Kruskal's algorithm to the graph derived from the triangulation to get the EMST\\
+Here is the algorithm:\\
+1. Compute the Delaunay Triangulation. \\
+2. Apply Prims's algorithm to the graph derived from the triangulation to get the EMST.\\
+\\
+Running time:\\
+Delaunay Triangulation takes $O(n \cdot logn)$ time.\\
+There are $O(n)$ edges and $O(n)$ vertices, thus Prim's will take $O(n \cdot logn)$ time. \\
+The total running time is thus $O(n \cdot logn)$\\
+
+\newpage
 
 \section*{Problem 9.17}
 
-The weight of a triangulation is the sum of the lengths of all edges of
-the triangulation. A minimum weight triangulation is a triangulation
-whose weight is minimal. Disprove the conjecture that the Delaunay
-triangulation is a minimum weight triangulation.\\
-\\
-If we take a quadrilateril that points inward, then we can construct a case where the Delaunay triangulation will have greater weight than the minimum weight triangulation.
+If we take a quadrilateral that points inward, then we can construct a case where the Delaunay triangulation will have greater weight than the minimum weight triangulation. The Delaunay Triangulation could end up choosing a high weight edge that you would not want to include in the minimum weight triangulation. 
 
 \begin{figure}[H]
 \centering
