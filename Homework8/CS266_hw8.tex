@@ -40,6 +40,9 @@
 
 \section*{Problem 11.2}
 
+Prove that the worst case running time of algorithm CONVEXHULL is
+O(n3), and that there are sets of points where a bad choice of the random
+permutation makes the algorithm actually need Θ(n3) time.
 
 %\begin{figure}[H]
 %\centering
@@ -49,8 +52,25 @@
 
 \section*{Problem 11.4}
 
+In many applications, only a small percentage of the points in a given set
+P of n points are extreme. In such a case, the convex hull of P has less
+than n vertices. This can actually make our algorithm CONVEXHULL
+run faster than Θ(nlogn).\\
+
+Assume, for instance, that the expected number of extreme points in a
+random sample of P of size r is $O(r^\alpha)$, for some constant $\alpha < 1$. (This
+is true when the set P has been created by picking points uniformly at
+random in a ball.) Prove that under this condition, the running time of
+the algorithm is O(n).
+
 \section*{Problem 11.8}
 
+Describe a randomized incremental algorithm to compute the intersection
+of half-planes, and analyze its expected running time. Your algorithm
+should maintain the intersection of the current set of half-planes.
+To figure out where to insert a new half-plane, maintain a conflict graph
+between the vertices of the current intersection and the half-planes that
+are still to be inserted.
 
 \end{document}
 
