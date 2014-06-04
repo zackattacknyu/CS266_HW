@@ -72,6 +72,17 @@ random sample of P of size r is $O(r^\alpha)$, for some constant $\alpha < 1$. (
 is true when the set P has been created by picking points uniformly at
 random in a ball.) Prove that under this condition, the running time of
 the algorithm is O(n).
+\\
+\\
+In Lemma 11.6, we are able to assert that the cardinality of the set is instead bounded by
+\[
+n^{\alpha*r}
+\]
+It holds that
+\[
+\sum{n^{\alpha*r}} \leq \frac{1}{1-n}
+\]
+This reduces the final result to $O(n)$
 
 \newpage
 
