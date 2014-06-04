@@ -40,15 +40,25 @@
 
 \section*{Problem 11.2}
 
-Prove that the worst case running time of algorithm CONVEXHULL is
-O(n3), and that there are sets of points where a bad choice of the random
-permutation makes the algorithm actually need Θ(n3) time.
+We will always be going through each of the n points. \\
+In the worst case, when we go through a point, almost every current facet except a constant number has to be deleted.\\
+A new conflict graph is then made and for each face, \\
+all the remaining points have to be checked to reconstruct the graph. \\
+\\
+Deleting the current facets will take O(n) time. \\
+Making a new conflict graph will be O(n) time for each facet and there are O(n) facets, so for each point there could be O($n^2$) operations to reconstruct the conflict graph. \\
+This has to be done for each point so in the worst case, the running time is $O(n^3)$. \\
+\\
+An example:\\
+Let's say we have a tower-like structure, where there is a triangular face at the bottom and then perpendicular to that face are $n$ points that are almost collinear above it. If we pick the bottom face first and then pick the points in ascending order by distance from the bottom, then at each point, we have to completely delete and rebuild the conflict graph and the hull as all but the bottom facet would be changed. This is a case that needs $\Theta(n^3)$ time. It is illustrated below. In the figure below, if the bottom triangle and 1 makes your starting tetrahedron, then you process point 2 and then point 3, the running time will be as bad as possible. 
 
-%\begin{figure}[H]
-%\centering
-%\includegraphics[height=2.5in]{hw7prob1diagram.jpg}
-%\caption{Beach Line example. The top breakpoint will move up while the bottom one will move down.}
-%\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[height=2.5in]{hw8prob1diagram.jpg}
+\caption{Bad Convex Hull points}
+\end{figure}
+
+\newpage
 
 \section*{Problem 11.4}
 
