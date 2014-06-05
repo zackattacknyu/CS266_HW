@@ -89,19 +89,7 @@ Thus our running time is $O(n)$
 
 \section*{Problem 11.8}
 
-Describe a randomized incremental algorithm to compute the intersection
-of half-planes, and analyze its expected running time. Your algorithm
-should maintain the intersection of the current set of half-planes.
-To figure out where to insert a new half-plane, maintain a conflict graph
-between the vertices of the current intersection and the half-planes that
-are still to be inserted.\\
-\\
-The intersection will be described by a set of vertices in a specific order making up the intersection as well as indicators of which side of the border the intersection lies on. \\
-For each vertex, we will maintain a pointer to the half-planes that it is inside of. This will be the conflict graph. \\
-There will be vertices representing lines going to infinity.\\
-There will be 4 additional vertices representing the 4 infinite corners\\
-\\
-When a new line is picked randomly, we see which vertices intersect its half-plane. We include only those vertices and add two new vertices for the new points. \\
+The intersection will be described by a set of vertices in a specific order making up the intersection as well as indicators of which side of the border the intersection lies on. For each vertex, we will maintain a pointer to the half-planes that it is inside of. This will be the conflict graph. There will be vertices representing lines going to infinity. There will be 4 additional vertices representing the 4 infinite corners. When a new line is picked randomly, we see which vertices intersect its half-plane. We include only those vertices and add two new vertices for the new intersection points. \\
 \\
 Here is the algorithm:\\
 Pick two lines randomly and compute their intersection. The intersection now consists of 3 vertices. \\
@@ -114,6 +102,7 @@ For each remaining line L in random order:\\
 - - Find edges $e_1$ and $e_2$ whose vertices were consecutive in the intersection but where one vertex was in L's half-plane and one was not\\
 - - Construct new vertices $v_1$ and $v_2$ which are the intersection of $e_1$ and $e_2$ with L. \\
 - - Add $v_1$ and $v_2$ to the intersection and compute which of the remaining half-planes they are inside. \\
+- - - For each vertex, you only have to test the half-planes that were in one of the neighbors but not the other neighbor. \\
 \\
 Worst Running time:\\
 It will be going through $n$ lines. \\
@@ -122,11 +111,9 @@ For each vertex or line, there are a constant number of operations being done. \
 Thus in the worst case, the running time is $O(n^2)$. \\
 \\
 Expected Running time:\\
-We will assume that there is not an empty intersection. \\
-The question then is we will continue or do we have to recompute the intersection. \\
+We assume intersection is not empty so the question then is we will continue or do we have to recompute the intersection. \\
 The expected running time is thus $\sum_{i=1}^n n \cdot Pr(I \notin L)$\\
 We will assume the probability reflects the fact that we have 1 line to find and $i$ lines computed, so at each step it is $\frac{1}{i}$. \\
-This gives us 
 \[
 T(n) = n \sum_{i=1}^n \frac{1}{i} \leq n \cdot log(n)
 \]
