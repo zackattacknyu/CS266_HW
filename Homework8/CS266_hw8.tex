@@ -102,7 +102,10 @@ For each remaining line L in random order:\\
 - - Find edges $e_1$ and $e_2$ whose vertices were consecutive in the intersection but where one vertex was in L's half-plane and one was not\\
 - - Construct new vertices $v_1$ and $v_2$ which are the intersection of $e_1$ and $e_2$ with L. \\
 - - Add $v_1$ and $v_2$ to the intersection and compute which of the remaining half-planes they are inside. \\
-- - - For each vertex, you only have to test the half-planes that were in one of the neighbors but not the other neighbor. \\
+- - - For each vertex $v$, you will look at the graph for its neighbors $u$ and $w$\\
+- - - If half-planes are in both $u$ and $w$, then just add it to $v$\\
+- - - If a half-plane is not in $u$ or $w$, do not add it to $v$\\
+- - - For half-planes that are in $u$ but not $w$ or vice versa, test it to see if it is in $v$\\
 \\
 Worst Running time:\\
 It will be going through $n$ lines. \\
@@ -111,12 +114,7 @@ For each vertex or line, there are a constant number of operations being done. \
 Thus in the worst case, the running time is $O(n^2)$. \\
 \\
 Expected Running time:\\
-We assume intersection is not empty so the question then is we will continue or do we have to recompute the intersection. \\
-The expected running time is thus $\sum_{i=1}^n n \cdot Pr(I \notin L)$\\
-We will assume the probability reflects the fact that we have 1 line to find and $i$ lines computed, so at each step it is $\frac{1}{i}$. \\
-\[
-T(n) = n \sum_{i=1}^n \frac{1}{i} \leq n \cdot log(n)
-\]
+Except for the recomputation of the conflict graph, there is a constant number of operations per vertex. There are $O(n)$ vertices so this amounts to $O(n)$ operations. We now need to focus on how many operations will be involved in computing the half-plane intersections. If we let $K(v)$ be the cardinality of the vertex and we put our algorithm into the language of configuration spaces, then we can assert that $\sum{K(v)} = O(n log n)$. We have to do a constant number of operations per edge in the graph, thus this gives us our expected running time. 
 
 \end{document}
 
