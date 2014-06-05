@@ -114,7 +114,7 @@ For each vertex or line, there are a constant number of operations being done. \
 Thus in the worst case, the running time is $O(n^2)$. \\
 \\
 Expected Running time:\\
-Except for the recomputation of the conflict graph, there is a constant number of operations per vertex. There are $O(n)$ vertices so this amounts to $O(n)$ operations. We now need to focus on how many operations will be involved in computing the half-plane intersections. If we let $K(v)$ be the cardinality of the vertex and we put our algorithm into the language of configuration spaces, then we can assert that $\sum{K(v)} = O(n log n)$. We have to do a constant number of operations per edge in the graph, thus this gives us our expected running time. 
+Except for the recomputation of the conflict graph, there is a constant number of operations per vertex. There are $O(n)$ vertices so this amounts to $O(n)$ operations. We now need to focus on how many operations will be involved in computing the half-plane intersections. If we let $K(v)$ be the cardinality of the vertex and we put our algorithm into the language of configuration spaces where our objects are half-planes and the configurations are vertices, then we can assert that $\sum{K(v)} = O(n log n)$. We have to do a constant number of operations per edge in the graph, thus this gives us our expected running time of $O(n log n)$. 
 
 \end{document}
 
